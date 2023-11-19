@@ -2,6 +2,8 @@ import streamlit as st
 import pickle
 import pandas as pd
 import requests
+import joblib
+import numpy as np
 
 def fetch_poster(movie_id):
 
@@ -36,7 +38,12 @@ def recommend(movie):
 
 movies_list = pickle.load(open('movies_dict.pkl','rb'))
 movies = pd.DataFrame(movies_list)
-similarity = pickle.load(open('similarity.pkl','rb'))
+#similarity = pickle.load(open('similarity.pkl','rb'))
+similarity1 = joblib.load('similarity_part1.joblib')
+similarity2 = joblib.load('similarity_part2.joblib')
+similarity = np.vstack((similarity1, similarity2))
+#joblib.dump(merged_array, 'merged_array.joblib')
+
 
 st.title('Movies Recommender System')
 
